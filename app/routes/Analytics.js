@@ -11,13 +11,13 @@ const routerInstance = new Router()
 // constants
 const prefix = "analytics"
 
-function formatDate(date) {
+const formatDate = date => {
 
   const day = date.getDate();
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  return year + '/' + month + '/' + day;
+  return year + '/' + (month + 1) + '/' + day;
 }
 
 routerInstance.get('/', (req, res, next) => {
