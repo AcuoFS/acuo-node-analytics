@@ -39,6 +39,25 @@ require('./app/routes').forEach(router => router({server}))
 
 // ===============================
 // start server
-server.listen(port, host, () => {
+const app = server.listen(port, host, () => {
   console.log(`${server.name} is listening at ${server.url}`)
 })
+
+console.log('new instance')
+
+const io = require("socket.io").listen(app)
+
+io.of('/uploadStream')
+  .on('connection', socket => {
+
+    console.log('new connection');
+    console.log(Object.keys(io.sockets.sockets))
+
+    setInterval(() => socket.emit('test', {data: "Hi from the server"}), 2000)
+    socket.on('disconnect', () => {
+      console.log('dc')
+      setTimeout(() => {
+        console.log(Object.keys(io.sockets.sockets))
+      }, 500)
+    })
+  })
