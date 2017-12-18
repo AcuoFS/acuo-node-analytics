@@ -53,7 +53,16 @@ io.of('/uploadStream')
     console.log('new connection');
     console.log(Object.keys(io.sockets.sockets))
 
-    setInterval(() => socket.emit('test', {data: "Hi from the server"}), 2000)
+    let lol = 0
+
+    setInterval(() => {
+      socket.emit(socket.conn.id, {
+        payload: `HI user@acuocpty.com from backend ${lol}`,
+        user: 'user@acuocpty.com'
+      })
+      lol++
+    }, 6000)
+
     socket.on('disconnect', () => {
       console.log('dc')
       setTimeout(() => {
